@@ -21,11 +21,24 @@ section {
       display: flex;
     }
 
+    .slider:hover {
+      will-change: transform;
+    }
+
     .slider li {
       width: 80vw;
       max-width: 800px;
       flex-shrink: 0;
       margin: 0 20px;
+      border-radius: 6px;
+      overflow: hidden;
+      opacity: 0.7;
+      transition: 0.4s;
+    }
+
+    .slider li.active {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }

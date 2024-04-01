@@ -1,10 +1,11 @@
+import { NgClass } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgClass],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -36,8 +37,8 @@ export class AppComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.getOffsetLeftValues();
-    this.changeSlider(0)
+    this.slideConfig();
+    this.changeSlider(0);
     this.transition(true);
   }
 
@@ -104,7 +105,7 @@ export class AppComponent implements OnInit {
     return -(slider.offsetLeft - margin);
   }
 
-  private getOffsetLeftValues(): void {
+  private slideConfig(): void {
     if (this.sliderElement) {
       const images = this.sliderElement.nativeElement.querySelectorAll('li img');
       images.forEach((element: HTMLElement | any): void => {

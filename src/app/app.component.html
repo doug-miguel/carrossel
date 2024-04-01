@@ -12,7 +12,7 @@
   >
     <ul class="slider" #slider>
       @for(carrosel of carrosseis ;track $index) {
-      <li #carouselImage><img [src]="carrosel" alt=""></li>
+      <li #carouselImage [ngClass]="{'active': $index === index.active}" ><img [src]="carrosel" alt=""></li>
       }
     </ul>
   </div>
