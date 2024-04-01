@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   public offsetLeftValues: number[] = [];
   public distBoolean: boolean = false;
   public dist = { finalPosition: 0, movePosition: 0, startX: 0, movement: 0 }
-  public index: { prev: number | null, active: number | null, next: number | null } = { prev: 0, active: 0, next: 0 }
+  public index: { prev: number | undefined, active: number, next: number | undefined } = { prev: 0, active: 0, next: 0 }
 
 
   public carrosseis: string[] = [
@@ -37,19 +37,27 @@ export class AppComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.getOffsetLeftValues();
-    this.changeSlider(2)
+    this.changeSlider(0)
+    this.transition(true);
+  }
+
+  private transition(activeSlider: boolean): void {
+    if (this.slider)
+      this.slider.style.transition = activeSlider ? '0.3s' : '';
   }
 
   public onDown(e: MouseEvent): void {
     e.preventDefault();
     this.distBoolean = true;
     this.dist.startX = e.clientX;
+    this.transition(false);
   }
 
   public onTouchDown(e: TouchEvent): void {
     e.preventDefault();
     this.distBoolean = true;
     this.dist.startX = e.targetTouches[0].clientX;
+    this.transition(false);
   }
 
   public onMove(e: MouseEvent): void {
@@ -69,7 +77,15 @@ export class AppComponent implements OnInit {
     if (this.distBoolean) {
       this.dist.finalPosition = this.dist.movePosition;
       this.distBoolean = false;
+      this.changeSlideOnEnd();
+      this.transition(true);
     }
+  }
+
+  private changeSlideOnEnd(): void {
+    if (this.dist.movement > 120 && this.index.next !== undefined) this.activeNextSlide();
+    else if (this.dist.movement < -120 && this.index.prev !== undefined) this.activePrevSlide();
+    else this.changeSlider(this.index.active);
   }
 
   private updatePosition(clientX: number): number {
@@ -98,18 +114,26 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public changeSlider(index: number): void {
+  private changeSlider(index: number): void {
     this.moveSlide(this.offsetLeftValues[index]);
     this.sliderIndexNav(index);
     this.dist.finalPosition = this.offsetLeftValues[index];
   }
 
-  public sliderIndexNav(index: number): void {
-    const last = this.offsetLeftValues.length - 1;
+  private sliderIndexNav(index: number): void {
+    const last = this.sliderElement.nativeElement.children.length - 1;
     this.index = {
-      prev: index ? index - 1 : null,
+      prev: index ? index - 1 : undefined,
       active: index,
-      next: index === last ? null : index + 1
+      next: index === last ? undefined : index + 1
     };
+  }
+
+  public activePrevSlide(): void {
+    if (this.index.prev !== undefined) this.changeSlider(this.index.prev)
+  }
+
+  public activeNextSlide(): void {
+    if (this.index.next !== undefined) this.changeSlider(this.index.next)
   }
 }
