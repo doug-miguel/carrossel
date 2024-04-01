@@ -15,6 +15,9 @@ export class AppComponent implements OnInit {
   @ViewChild('wrapperSlider') wrapperSliderElement!: ElementRef<HTMLDivElement>;
   @ViewChild('slider') sliderElement!: ElementRef<HTMLUListElement>;
 
+  public arrow: boolean = true;
+  public paginator: boolean = true;
+
   public slider: HTMLElement | null = null;
   public offsetLeftValues: number[] = [];
   public distBoolean: boolean = false;
@@ -107,7 +110,7 @@ export class AppComponent implements OnInit {
 
   private slideConfig(): void {
     if (this.sliderElement) {
-      const images = this.sliderElement.nativeElement.querySelectorAll('li img');
+      const images = this.sliderElement.nativeElement.querySelectorAll('li');
       images.forEach((element: HTMLElement | any): void => {
         const positionElement = this.slidePosition(element);
         this.offsetLeftValues.push(positionElement);
@@ -115,7 +118,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private changeSlider(index: number): void {
+  public changeSlider(index: number): void {
     this.moveSlide(this.offsetLeftValues[index]);
     this.sliderIndexNav(index);
     this.dist.finalPosition = this.offsetLeftValues[index];

@@ -16,4 +16,17 @@
       }
     </ul>
   </div>
+  @if(arrow) {
+    <div class="arrow-nav">
+      <button (click)="activePrevSlide()">Voltar</button>
+      <button (click)="activeNextSlide()">Avançar</button>
+    </div>
+  }
+  @if(paginator) {
+    <div class="paginator">
+      @for(carrosel of carrosseis ;track $index) {
+        <div class="dot" [ngClass]="{'dotActive': $index === index.active}" (click)="changeSlider($index)"></div>
+      }
+    </div>
+  }
 </section>

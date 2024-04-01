@@ -33,12 +33,39 @@ section {
       border-radius: 6px;
       overflow: hidden;
       opacity: 0.7;
+      transform: scale(0.5);
       transition: 0.4s;
     }
 
     .slider li.active {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  .arrow-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .paginator {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50px;
+      background-color: rgb(210, 210, 210);
+      opacity: 1;
+    }
+
+    .dotActive {
+      background-color: gray;
     }
   }
 }
