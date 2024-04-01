@@ -60,12 +60,17 @@ section {
       width: 20px;
       height: 20px;
       border-radius: 50px;
-      background-color: rgb(210, 210, 210);
+      background-color: #d2d2d2;
       opacity: 1;
+      cursor: pointer;
+    }
+
+    .dot:hover {
+      background-color: #7d7d7d;
     }
 
     .dotActive {
-      background-color: gray;
+      background-color: #7d7d7d;
     }
   }
 }
